@@ -165,39 +165,3 @@ prompt.get(schema, (err, result) => {
     },
   );
 });
-
-// const { username: USERNAME, password: PASSWORD } = argv;
-
-// console.clear();
-
-// if (!USERNAME || !PASSWORD) {
-//   console.log(`${chalk.red('Error:')} --username and --password are required.`);
-//   process.exit(1);
-// }
-
-// console.dir(argv, { colors: true });
-
-// // const PASSWORD = '4a9Xp!&x7@9F';
-
-// const API_URI = 'https://bitbucket.playzido.com/rest/api/1.0/projects/BAC/repos/back-office-actual';
-// // const PULL_REQUESTS_URI = `${API_URI}/pull-requests?state=MERGED&at=refs%2Fheads%2Fmaster`;
-
-// const options = {
-//   auth: {
-//     username: USERNAME,
-//     password: PASSWORD
-//   }
-// };
-
-// const getCommitsUri = id => `${API_URI}/pull-requests/${id}/commits?start=0&limit=1000`;
-
-// const sortByComitter = (a, b) => {
-//   if (a.committer < b.committer) return -1;
-//   if (a.committer > b.committer) return 1;
-//   return 0;
-// };
-
-// getPullRequestCommits(
-//   [246, 257, 267, 279, 288],
-//   { email: 'andre.alves@inspireit.pt' }
-// );
