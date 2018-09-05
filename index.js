@@ -50,6 +50,20 @@ const schema = {
       required: true,
       default: getDefaultValue('password'),
     },
+    projectSlug: {
+      description: 'Enter your bitbucket project slug',
+      message: 'project slug is required!',
+      type: 'string',
+      required: true,
+      default: getDefaultValue('projectSlug', 'BAC'),
+    },
+    repoName: {
+      description: 'Enter your bitbucket repository name',
+      message: 'repository name is required!',
+      type: 'string',
+      required: true,
+      default: getDefaultValue('repoName', 'back-office-actual'),
+    },
     filterByEmail: {
       description: 'Filter by committer e-mail',
       type: 'string',
@@ -132,6 +146,8 @@ prompt.get(schema, (err, result) => {
     pullRequests,
     useMessageRegex,
     messageRegex,
+    projectSlug,
+    repoName,
   } = result;
 
   getPullRequestCommits(
@@ -142,6 +158,8 @@ prompt.get(schema, (err, result) => {
     {
       username,
       password,
+      projectSlug,
+      repoName,
       email: filterByEmail === 'y' && email,
       messageRegex: useMessageRegex === 'y' && messageRegex,
     },
