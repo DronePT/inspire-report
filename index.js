@@ -81,22 +81,22 @@ const schema = {
         return prompt.history('filterByEmail').value === 'y';
       },
     },
-    pullRequests: {
-      description: 'Enter pull requests id\'s (separated by ",")',
-      required: true,
-      pattern: /[0-9,]/,
-      type: 'string',
-      default: getDefaultValue('pullRequests'),
-      conform(value) {
-        const totalPullRequests = value
-          .replace(/\s/, '')
-          .split(',')
-          .filter(v => !!v).length;
+    // pullRequests: {
+    //   description: 'Enter pull requests id\'s (separated by ",")',
+    //   required: true,
+    //   pattern: /[0-9,]/,
+    //   type: 'string',
+    //   default: getDefaultValue('pullRequests'),
+    //   conform(value) {
+    //     const totalPullRequests = value
+    //       .replace(/\s/, '')
+    //       .split(',')
+    //       .filter(v => !!v).length;
 
-        return totalPullRequests > 0;
-      },
-      message: 'At least 1 pull request id is required, please enter only numbers and commas.',
-    },
+    //     return totalPullRequests > 0;
+    //   },
+    //   message: 'At least 1 pull request id is required, please enter only numbers and commas.',
+    // },
     useMessageRegex: {
       description: 'Filter commits message?',
       type: 'string',
@@ -143,25 +143,18 @@ prompt.get(schema, (err, result) => {
     password,
     filterByEmail,
     email,
-    pullRequests,
     useMessageRegex,
     messageRegex,
     projectSlug,
     repoName,
   } = result;
 
-  getPullRequestCommits(
-    pullRequests
-      .replace(/\s/, '')
-      .split(',')
-      .filter(v => !!v),
-    {
-      username,
-      password,
-      projectSlug,
-      repoName,
-      email: filterByEmail === 'y' && email,
-      messageRegex: useMessageRegex === 'y' && messageRegex,
-    },
-  );
+  getPullRequestCommits({
+    username,
+    password,
+    projectSlug,
+    repoName,
+    email: filterByEmail === 'y' && email,
+    messageRegex: useMessageRegex === 'y' && messageRegex,
+  });
 });
