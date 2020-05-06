@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const prompt = require('prompt');
 const fs = require('fs');
 const path = require('path');
+const moment = require('moment');
 
 const { getPullRequestCommits } = require('./lib');
 
@@ -30,7 +31,8 @@ const getConfiguration = () => {
 
 const CONFIG = getConfiguration();
 
-const getDefaultValue = (key, defaultValue = '') => (CONFIG && !!CONFIG[key] ? CONFIG[key] : defaultValue);
+const getDefaultValue = (key, defaultValue = '') =>
+  CONFIG && !!CONFIG[key] ? CONFIG[key] : defaultValue;
 
 const schema = {
   properties: {
@@ -114,6 +116,26 @@ const schema = {
         return prompt.history('useMessageRegex').value === 'y';
       },
     },
+    startDate: {
+      description: 'Pull requests start date',
+      message: 'Start date!',
+      type: 'string',
+      required: true,
+      default: getDefaultValue(
+        'startDate',
+        moment().startOf('month').format('YYYY-MM-DD')
+      ),
+    },
+    endDate: {
+      description: 'Pull requests end date',
+      message: 'End date',
+      type: 'string',
+      required: true,
+      default: getDefaultValue(
+        'endDate',
+        moment().endOf('month').format('YYYY-MM-DD')
+      ),
+    },
   },
 };
 
@@ -147,6 +169,8 @@ prompt.get(schema, (err, result) => {
     messageRegex,
     projectSlug,
     repoName,
+    startDate,
+    endDate,
   } = result;
 
   getPullRequestCommits({
@@ -156,5 +180,7 @@ prompt.get(schema, (err, result) => {
     repoName,
     email: filterByEmail === 'y' && email,
     messageRegex: useMessageRegex === 'y' && messageRegex,
+    startDate,
+    endDate,
   });
 });
